@@ -17,7 +17,7 @@ export default function FooterBan({b} : {b : IB} ) {
         <div className="right">
 
           <p>{b.smallText}</p>
-          <h3>{b.midText}</h3>
+          <p>{b.midText}</p>
 
           <p>{b.desc}</p>
 
