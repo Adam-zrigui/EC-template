@@ -10,14 +10,14 @@ export default function FooterBan({b} : {b : IB} ) {
       <div className="banner-desc">
         <div className="left">
           <p>{b.discount}</p>
-          <p>{b.largeText1}</p>
-<p>{b.largeText2}</p>
+          <h3>{b.largeText1}</h3>
+<h3>{b.largeText2}</h3>
 <p>{b.saleTime}</p>
         </div>
         <div className="right">
 
           <p>{b.smallText}</p>
-          <p>{b.midText}</p>
+          <h3>{b.midText}</h3>
 
           <p>{b.desc}</p>
 
