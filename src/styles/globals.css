@@ -238,8 +238,8 @@ text-align: end;
 }
 .banner-desc .left h3{
   font-weight: 900;
-  font-size: 80px;
-  margin-left: 25px;
+  font-size: 40px;
+  margin-left: 15px;
 }
 .banner-desc .left p{
   margin:18px;
@@ -256,7 +256,7 @@ text-align: end;
 }
 .banner-desc .right h3{
   font-weight: 800;
-  font-size: 60px;
+  font-size: 40px;
 }
 .banner-desc .right p{
   font-size: 18px;
