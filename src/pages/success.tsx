@@ -4,14 +4,14 @@ import Link from 'next/link'
 import React, { useEffect } from 'react'
 import {BsBagCheckFill} from "react-icons/bs"
 export default function Success() {
-const {setitem , setprice  , setqty} = useStateContext()
+const {setCartItems , setTotalPrice  , setTotalQuantities} = useStateContext()
 useEffect(() => {
-    setitem([])
-    setprice(0)
-    setqty(0)
+    setCartItems([])
+    setTotalPrice(0)
+    setTotalQuantities(0)
     animation()
     
-}, [setitem, setprice, setqty]) 
+}, [setCartItems, setTotalPrice, setTotalQuantities]) 
 return (
     <section className='success-wrapper'>
         <div className="success">
