@@ -9,22 +9,20 @@ import React, { useState } from 'react'
 import {AiOutlineMinus , AiOutlinePlus , AiFillStar , AiOutlineStar} from "react-icons/ai"
 import ReactStars from 'react-stars'
 export default function Slug({product , products} : { product : IP, products: IP[]}) {
-console.log(product)
 const [index, setIndex] = useState(0);
-const { decQty, incQty, qty, onAdd , setcard } = useStateContext();
+const { decQty, incQty, qty, onAdd , setShowCart } = useStateContext();
 const { image, name, details, price , rate } = product;
 const {status} =useSession()
-console.log(image)
 const RightNow = () => {
   onAdd(product, qty)
-setcard(true)
+setShowCart(true)
 }
 return (
   <div>
     <div className="product-detail-container">
       <div>
         <div className="image-container">
-          <Image src={urlfor(image && image[index]).url()} className="product-detail-image"   width={300} height={300}   alt="" />
+          <Image src={urlfor(image && image[index]).url()} className="product-detail-image"  priority={true} width={300} height={300}   alt="" />
         </div>
         <div className="small-images-container">
           {image?.map((item : any, i : number) => (
@@ -46,7 +44,7 @@ return (
         <div className="reviews">
           <div>
 <h4>Rate:</h4>
-<ReactStars value={rate} size={24} edit={false} />
+<ReactStars size={40} value={rate} edit={false}  className='stars' />
           </div>
      
         </div>
@@ -111,7 +109,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     const pQ = `*[_type == "product"]`
     const product = await  client.fetch(query)
     const products = await  client.fetch(pQ)
-   console.log(product)
+
       return {
         props:{
             products,

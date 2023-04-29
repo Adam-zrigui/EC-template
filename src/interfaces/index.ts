@@ -7,6 +7,7 @@
    quantity: number;
    _id: string;
    rate: number
+   totalPrice: number
 }
  export interface IB {
     buttonText: string;

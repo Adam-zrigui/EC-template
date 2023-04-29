@@ -8,14 +8,12 @@ const  stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string,
 export default async function handler(req: NextApiRequest, res : NextApiResponse) {
   if (req.method === 'POST') {
     try {
-      console.log(req.body)
       const params: Stripe.Checkout.SessionCreateParams = {
         submit_type: 'pay',
         mode: 'payment',
         line_items: req.body.item.map((item : IP) => {
 const img = item.image[0].asset._ref
 const real = img.replace('image-', "https://cdn.sanity.io/images/u8lf0ibx/production/").replace('-webp', '.webp')
-console.log(real)
 return {
   price_data: {
     currency:'usd',

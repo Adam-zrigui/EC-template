@@ -1,20 +1,19 @@
 import { useStateContext } from '@/hooks/State'
 import animation from '@/utils/animation'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import {BsBagCheckFill} from "react-icons/bs"
 export default function Success() {
 const {setitem , setprice  , setqty} = useStateContext()
 useEffect(() => {
-    localStorage.clear()
     setitem([])
     setprice(0)
     setqty(0)
     animation()
     
-})
+}, [setitem, setprice, setqty]) 
 return (
-    <div className='success-wrapper'>
+    <section className='success-wrapper'>
         <div className="success">
             <p className="icon">
                 <BsBagCheckFill />
@@ -35,6 +34,6 @@ continue shopping
     </button>
 </Link>
         </div>
-    </div>
+    </section>
   )
 }

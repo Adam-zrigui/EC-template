@@ -6,7 +6,7 @@ import Cart from './Cart'
 import { useStateContext } from '@/hooks/State'
 export default function Nav() {
   const {status} = useSession()
-  const {showCard , setcard , qty} = useStateContext()
+  const {showCart , setShowCart, qty} = useStateContext()
   return (
     <nav className='navbar-container'>
   <p className="logo">
@@ -20,7 +20,7 @@ export default function Nav() {
       
     }}>sign out</b>}
   </p>
-{status === "authenticated" &&  <button className="cart-icon" onClick={() => setcard(true)}>
+{status === "authenticated" &&  <button className="cart-icon" onClick={() => setShowCart(true)}>
   
       <AiOutlineShopping />
       <span className="cart-item-qty">{qty}</span>
@@ -28,7 +28,7 @@ export default function Nav() {
 
     
   </button>}
-{showCard &&  <Cart /> }
+{showCart &&  <Cart /> }
     </nav>
   )
 }

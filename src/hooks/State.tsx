@@ -1,111 +1,124 @@
 import { IP } from '@/interfaces';
-import React, { useState } from 'react'
-import { toast} from "react-hot-toast"
+import React, { createContext, useContext, useState } from 'react';
+import { toast } from 'react-hot-toast';
 type ContextValue = {
-  showCard: boolean;
-  item: any;
-  price: any;
-  total: any;
-  qty: number;
-  incQty: () => void;
-  decQty: () => void;
-  onAdd: (p : IP, q : number)  => void;
-  setcard: (b : boolean) => void;
-  tciq: (id : string , value: 'inc' | 'dec') => void
-  onDel: (product : IP) => void;
-  setitem: any
-  setprice : any
-  setT: any
-  setqty: any
+  showCart : boolean,
+  setShowCart : any,
+  cartItems : any,
+  totalPrice : number,
+  totalQuantities : number,
+  qty : number,
+  incQty : () => void,
+  decQty : () => void,
+  onAdd: (p : IP,q : number) => void,
+  toggleCartItemQuantity : any,
+  onRemove : (product: IP) => void,
+  setCartItems : any,
+  setTotalPrice : any,
+  setTotalQuantities: any 
 };
-const Context = React.createContext<ContextValue | undefined>(undefined)
+const Context = createContext<ContextValue | undefined>(undefined);
 
-export default function State({children} : any) {
-  let found : IP
-  let index 
-  const [showCard, setcard] = useState(false)
-  const [item, setitem] = useState<any[]>([])
-  const [price, setprice] = useState(0)
-  const [total, setT] = useState(0)
-  const [qty, setqty] = useState(0)
-  const incQty = () => setqty((prev) => prev + 1)
-  const decQty = () => setqty((prev) =>{ 
-    if(prev - 1 < 1) return 1
-    return prev -1 
-  })  
-const onAdd = (p : IP, q : number)  => {
-  const checkmate = item.find((i : IP) => i._id === p._id)
-setprice((prev : number) => prev + p.price * q)
-  setqty((prev : number) => prev  + q)
-    if (checkmate) {
-const update = item.map((i : IP) =>{
-  if (i._id === p._id) return {
-    ...i,
-    q: i.quantity + q
+export const StateContext = ({ children } : {children : React.ReactNode}) => {
+  const [showCart, setShowCart] = useState(false);
+  const [cartItems, setCartItems] = useState<any[]>([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [totalQuantities, setTotalQuantities] = useState(0);
+  const [qty, setQty] = useState(1);
+
+  let foundProduct : IP;
+  let index;
+
+  const onAdd = (product : IP, quantity: number) => {
+    const checkProductInCart = cartItems.find((item : IP) => item._id === product._id);
+    
+    setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * quantity);
+    setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
+    
+    if(checkProductInCart) {
+      const updatedCartItems = cartItems.map((cartProduct) => {
+        if(cartProduct._id === product._id) return {
+          ...cartProduct,
+          quantity: cartProduct.quantity + quantity
+        }
+      })
+
+      setCartItems(updatedCartItems);
+    } else {
+      product.quantity = quantity;
+      
+      setCartItems([...cartItems, { ...product }]);
+    }
+
+    toast.success(`${qty} ${product.name} added to the cart.`);
+  } 
+
+  const onRemove = (product: IP) => {
+    foundProduct = cartItems.find((item : IP) => item._id === product._id);
+    const newCartItems = cartItems.filter((item : IP) => item._id !== product._id);
+
+    setTotalPrice((prevTotalPrice) => prevTotalPrice -foundProduct.price * foundProduct.quantity);
+    setTotalQuantities(prevTotalQuantities => prevTotalQuantities - foundProduct.quantity);
+    setCartItems(newCartItems);
   }
-})  
-setitem(update)
 
-} else {
-p.quantity = q
-setitem([...item , {...p}])
-}
-toast.success(`${qty} ${p.name} added to the cart`)
+  const toggleCartItemQuantity = (id : string, value : 'dec' |'inc') => {
+    foundProduct = cartItems.find((item) => item._id === id)
+    index = cartItems.findIndex((product) => product._id === id);
+    const newCartItems = cartItems.filter((item) => item._id !== id)
 
-}
-const onDel = (product : IP) => {
-  found = item.find((i) => i._id === product._id)
-  const cart = item.filter((i) => i._id !== product._id)
-  setT((prev) => prev - found.price * found.quantity)
-  setqty(prev => prev - found.quantity)
-  setitem(cart)
-}
-const tciq = (id : string , value: 'inc' | 'dec') => {
-found = item.find((i) => i._id === id)
-index = item.findIndex(p => p._id === id)
-const cart = item.filter((i) => i._id !== id)
-if (value === 'inc' ) {
+    if(value === 'inc') {
+      setCartItems([...newCartItems, { ...foundProduct, quantity: foundProduct.quantity + 1 } ]);
+      setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price)
+      setTotalQuantities(prevTotalQuantities => prevTotalQuantities + 1)
+    } else if(value === 'dec') {
+      if (foundProduct.quantity > 1) {
+        setCartItems([...newCartItems, { ...foundProduct, quantity: foundProduct.quantity - 1 } ]);
+        setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price)
+        setTotalQuantities(prevTotalQuantities => prevTotalQuantities - 1)
+      }
+    }
+  }
 
-  setitem([...cart, { ...found, quantity: found.quantity + 1 } ]);
-  setT((prevTotalPrice) => prevTotalPrice + found.price)
-  setqty(prevTotalQuantities => prevTotalQuantities + 1)
-} else if (value === 'dec') {
-if (found.quantity > 1) {
-  setitem([...cart, { ...found, quantity: found.quantity - 1 } ]);
-  setT((prevTotalPrice) => prevTotalPrice - found.price)
-  setqty(prevTotalQuantities => prevTotalQuantities - 1)  
-}
-}
-} 
+  const incQty = () => {
+    setQty((prevQty) => prevQty + 1);
+  }
+
+  const decQty = () => {
+    setQty((prevQty) => {
+      if(prevQty - 1 < 1) return 1;
+     
+      return prevQty - 1;
+    });
+  }
+
   return (
     <Context.Provider
-    value={{
-      showCard,
-      item,
-      price,
-      total,
-      qty,
-      incQty,
-      decQty,
-      onAdd,
-      setcard,
-      tciq,
-      onDel,
-      setitem,
-      setprice, 
-      setT,
-      setqty
-    }}
+      value={{
+        showCart,
+        setShowCart,
+        cartItems,
+        totalPrice,
+        totalQuantities,
+        qty,
+        incQty,
+        decQty,
+        onAdd,
+        toggleCartItemQuantity,
+        onRemove,
+        setCartItems,
+        setTotalPrice,
+        setTotalQuantities 
+      }}
     >
       {children}
     </Context.Provider>
   )
 }
-
 export const useStateContext = () => {
-  const context = React.useContext(Context);
-  if (!context) {
-    throw new Error('useStateContext must be used within a StateProvider');
+  const contextValue = useContext(Context);
+  if (contextValue === undefined) {
+    throw new Error('useStateContext must be used within a StateContextProvider');
   }
-  return context;
+  return contextValue;
 };

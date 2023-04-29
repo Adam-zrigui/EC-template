@@ -1,6 +1,4 @@
 import { IB } from '@/interfaces'
-import { urlfor } from '@/lib/client'
-import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
@@ -21,12 +19,12 @@ export default function FooterBan({b} : {b : IB} ) {
 
           <p>{b.desc}</p>
 
-          <Link href={`/products/${b.product}`} >
+          <Link href={`/product/${b.product}`}  className='btnm'>
             <button>{b.buttonText}</button>
           </Link>
 
         </div>
-    
+
          
       </div>
   

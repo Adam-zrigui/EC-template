@@ -239,7 +239,7 @@ text-align: end;
 .banner-desc .left h3{
   font-weight: 900;
   font-size: 40px;
-  margin-left: 15px;
+  margin-left: 25px;
 }
 .banner-desc .left p{
   margin:18px;
@@ -391,6 +391,9 @@ padding: 30px 65px;
 
 }
 
+.btnm {
+  margin: 100px;
+}
 .btn-container{
   width: 400px;
   margin: auto;
@@ -617,7 +620,9 @@ margin-top: 160px;
 .product-max-qty{
   margin-top: 10px;
 }
-
+b {
+  margin-left: 30px;
+}
 @media screen and (max-width:800px) {
   .hero-banner-container{
     height: 560px;
@@ -628,8 +633,9 @@ margin-top: 160px;
     top: -2%;
     right: -6%;
   }
+  
   .footer-banner-container{
-    height: 560px;
+    height: 660px;
     margin-top: 80px;
   }
   .footer-banner-image{
@@ -638,16 +644,16 @@ margin-top: 160px;
     top: 6%;
     height: 56%
   }
-  .banner-desc .left h5{
+  .banner-desc .left h3{
     font-weight: 900;
-    font-size: 50px;
+    font-size: 40px;
     margin-left: 5px;
   }
   .banner-desc .left p{
     margin:18px;
   }
   .banner-desc .right h3{
-    font-size: 45px;
+    font-size: 35px;
   }
   .banner-desc .right p{
     font-size: 18px;
@@ -760,8 +766,10 @@ margin-top: 160px;
   width: 300px;
   margin: auto;
 }
+footer {
+  margin: 50px;
 }
-b {
-  margin-left: 50px;
-  cursor: pointer;
+}
+footer {
+  margin: 50px;
 }

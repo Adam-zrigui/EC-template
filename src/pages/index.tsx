@@ -12,18 +12,18 @@ export default function Home ({products , banner} : {products : IP[] , banner : 
 )}
 
 
-<div className="products-heading">
-<h2> best selling shit</h2> 
+<article className="products-heading">
+<h2> best selling product</h2> 
 
-</div>
-<div className="products-container">
+</article>
+<section className="products-container">
   {products.map((product) => <Product key={product._id} product={product} />)}
-</div>
+</section>
 <FooterBan b={banner && banner[0]} />
 </>
   )
 }
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async () => {
 const query = '*[_type == "product"]'
 const products = await  client.fetch(query)
 const queryB = '*[_type == "banner"]'
