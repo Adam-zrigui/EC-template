@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res : NextApiResponse
       const params: Stripe.Checkout.SessionCreateParams = {
         submit_type: 'pay',
         mode: 'payment',
-        line_items: req.body.item.map((item : IP) => {
+        line_items: req.body.cartItems.map((item : IP) => {
 const img = item.image[0].asset._ref
 const real = img.replace('image-', "https://cdn.sanity.io/images/u8lf0ibx/production/").replace('-webp', '.webp')
 return {
