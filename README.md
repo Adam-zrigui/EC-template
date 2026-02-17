@@ -82,25 +82,9 @@ Development & CI
 - Type checks: `pnpm tsc --noEmit` as a CI gate.
 - Tests: integrate a minimal test runner (Jest or Vitest) if you need regressions.
 
-Deployment notes
-- Vercel: recommended for zero-config Next.js deployments. Ensure environment variables are set in the Vercel project.
-- Docker: `docker-compose` is included for local reproducible stacks; update the compose file with your DB credentials for CI or staging.
-
-Security & secrets
-- Never commit `.env` or secret keys. Use `gitignore`.
-- Rotate Stripe keys immediately if exposed.
-- Use `NEXTAUTH_SECRET` of sufficient entropy (32+ chars); store in secret manager for production.
-
-Optional next steps I can do for you
-- add a `.env.example` file with the above vars
-- add a simple `pnpm test` and CI config
-- wire a seed script for demo products
 
 Contributing
 - Fork, branch, open a PR with focused changes. Keep commits small and include a short description.
 
-License
-- MIT (change as needed)
 
-File updated: `README.md` — replaced with a professional README including sanity checks and examples.
 
