@@ -1,6 +1,5 @@
 # EC-template
 
-[Production demo](https://e-c-template.vercel.app/)
 
 Professional starter for a small e-commerce app built with Next.js + TypeScript. Opinionated minimal stack to get a production-ready flow quickly: SSR/SSG pages, API routes for payments and auth, a Prisma-backed data model, Tailwind for styling, and Stripe for payments.
 
